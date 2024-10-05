@@ -5,7 +5,7 @@ export type AssetsManager = {
 };
 
 export async function loadAssets(): Promise<AssetsManager> {
-  const rl = ctx.rl;
+  const { rl } = ctx;
 
   const logo = await rl.loadTexture("logo.png");
 

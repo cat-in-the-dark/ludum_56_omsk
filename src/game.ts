@@ -1,20 +1,10 @@
-import { Vector2 } from "@cat_in_the_dark/math";
-import { ctx, Texture } from "@cat_in_the_dark/raylib-wasm";
+import { ctx } from "@cat_in_the_dark/raylib-wasm";
 import { Raylib } from "@cat_in_the_dark/raylib-wasm";
 import { AssetsManager, loadAssets } from "./assets";
-import { TitleScene } from "./scenes/title";
-import { sceneManager } from "./lib/scene-manager";
 import { inputs } from "./lib/inputs";
+import { sceneManager } from "./lib/scene-manager";
 import { GameScene } from "./scenes/game";
-
-function update(state: { am: AssetsManager }) {
-  const rl = ctx.rl;
-
-  rl.drawing(() => {
-    rl.clearBackground(rl.PINK);
-    rl.drawFPS(10, 10);
-  });
-}
+import { TitleScene } from "./scenes/title";
 
 export async function main(rl: Raylib) {
   rl.initWindow(360, 288, "Hello");

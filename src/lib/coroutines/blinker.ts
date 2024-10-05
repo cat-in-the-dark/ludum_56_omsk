@@ -1,4 +1,4 @@
-import type { IUpdateable } from '../interfaces/updateable';
+import type { IUpdateable } from "../interfaces/updateable";
 
 export class Blinker implements IUpdateable {
   private elapsed = 0;

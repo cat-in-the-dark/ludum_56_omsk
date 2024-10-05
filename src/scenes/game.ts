@@ -6,7 +6,7 @@ export class GameScene implements IScene {
     // ?
   }
   update(dt: number): void {
-    const rl = ctx.rl;
+    const { rl } = ctx;
 
     rl.drawing(() => {
       rl.clearBackground(rl.GOLD);

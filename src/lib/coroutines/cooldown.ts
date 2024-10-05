@@ -1,4 +1,4 @@
-import type { IUpdateable } from '../interfaces/updateable';
+import type { IUpdateable } from "../interfaces/updateable";
 
 export class Cooldown implements IUpdateable {
   private elapsed = 0;

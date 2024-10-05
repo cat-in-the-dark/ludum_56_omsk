@@ -1,0 +1,86 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "max-lines-per-function": [
+      "error",
+      60
+    ],
+    "curly": [
+      "error",
+      "all"
+    ],
+    "default-case": "error",
+    "default-param-last": "error",
+    "eqeqeq": "error",
+    "no-alert": "error",
+    "no-console": "warn",
+    "no-else-return": "error",
+    "no-eval": "error",
+    "no-return-await": "error",
+    "no-sequences": "error",
+    "prefer-const": "error",
+    "prefer-destructuring": "error",
+    "array-bracket-newline": [
+      "error",
+      "consistent"
+    ],
+    "arrow-parens": "error",
+    "brace-style": [
+      "error",
+      "1tbs"
+    ],
+    "key-spacing": [
+      "error",
+      {
+        "beforeColon": false,
+        "afterColon": true
+      }
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "tabWidth": 2
+      }
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ]
+      }
+    ]
+  },
+  "parser": "@typescript-eslint/parser"
+}

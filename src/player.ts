@@ -4,5 +4,7 @@ import { IUpdateable } from "./lib/interfaces/updateable";
 class Player implements IUpdateable {
   constructor(public pos: Vector2) {}
 
-  update(dt: number): void {}
+  update(dt: number): void {
+    // nothing
+  }
 }

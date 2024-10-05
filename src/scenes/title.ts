@@ -1,9 +1,9 @@
 import { Vector2 } from "@cat_in_the_dark/math";
+import { ctx } from "@cat_in_the_dark/raylib-wasm";
 import { AssetsManager } from "../assets";
 import { Cooldown } from "../lib/coroutines/cooldown";
-import { IScene, sceneManager } from "../lib/scene-manager";
-import { ctx } from "@cat_in_the_dark/raylib-wasm";
 import { inputs } from "../lib/inputs";
+import { IScene, sceneManager } from "../lib/scene-manager";
 
 const zero = Vector2.zero();
 
@@ -15,7 +15,7 @@ export class TitleScene implements IScene {
   }
 
   update(dt: number): void {
-    const rl = ctx.rl;
+    const { rl } = ctx;
 
     rl.drawing(() => {
       rl.clearBackground(rl.PINK);
