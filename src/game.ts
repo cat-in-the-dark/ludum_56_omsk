@@ -29,5 +29,6 @@ export async function main(rl: Raylib) {
     }
 
     inputs.update(dt);
+    // inputs.debug();
   });
 }

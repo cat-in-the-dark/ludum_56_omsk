@@ -6,6 +6,8 @@ import { Player } from "../entities/player";
 import { inputs } from "../lib/inputs";
 import { IScene } from "../lib/scene-manager";
 
+const position = new Vector2(128, 128);
+
 export class GameScene implements IScene {
   players: Map<string, Player> = new Map();
   private spawnPoses = [new Vector2(16, 16), new Vector2(64, 16)];
@@ -30,6 +32,7 @@ export class GameScene implements IScene {
       for (const [key, player] of this.players) {
         player.draw();
       }
+      this.am.font.drawTextPro({ text: "qazwsxerdcrfv\ntgbyhyhujmik,olp;", position, fontSize: 12 });
     });
   }
 
