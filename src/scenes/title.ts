@@ -9,19 +9,18 @@ const zero = Vector2.zero();
 
 export class TitleScene implements IScene {
   constructor(private am: AssetsManager, private timer = new Cooldown(2)) {}
+  draw(): void {
+    const { rl } = ctx;
+
+    rl.clearBackground(rl.PINK);
+    this.am.logo.draw(zero, 0, 4);
+  }
 
   activate(): void {
     this.timer.reset();
   }
 
   update(dt: number): void {
-    const { rl } = ctx;
-
-    rl.drawing(() => {
-      rl.clearBackground(rl.PINK);
-      this.am.logo.draw(zero, 0, 4);
-    });
-
     if (inputs.anyPressed() || this.timer.invoke()) {
       sceneManager.set("game");
     }

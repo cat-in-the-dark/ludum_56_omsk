@@ -1,5 +1,4 @@
 import { Vector2 } from "@cat_in_the_dark/math";
-import { ctx } from "@cat_in_the_dark/raylib-wasm";
 import { AssetsManager } from "../assets";
 import { isArrows, isWASD } from "../controls";
 import { Player } from "../entities/player";
@@ -18,22 +17,24 @@ export class GameScene implements IScene {
     this.players = new Map();
   }
 
-  update(dt: number): void {
-    const { rl } = ctx;
+  draw(): void {
+    this.am.logo.draw(Vector2.zero(), 0, 6);
+    for (const [, player] of this.players) {
+      player.draw();
+    }
+    this.am.font.drawTextPro({
+      text: "qazwsxerdcrfv\ntgbyhyhujmik,olp;",
+      position,
+      fontSize: 12,
+    });
+  }
 
-    for (const [key, player] of this.players) {
+  update(dt: number): void {
+    for (const [, player] of this.players) {
       player.update(dt);
     }
 
     this.handleNewPlayer();
-
-    rl.drawing(() => {
-      rl.clearBackground(rl.GOLD);
-      for (const [key, player] of this.players) {
-        player.draw();
-      }
-      this.am.font.drawTextPro({ text: "qazwsxerdcrfv\ntgbyhyhujmik,olp;", position, fontSize: 12 });
-    });
   }
 
   exit(): void {
