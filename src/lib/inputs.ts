@@ -1,5 +1,9 @@
 import type { IUpdateable } from "./interfaces/updateable";
 
+const buttonIsAxisGamepads = new Set([
+  "usb gamepad            (Vendor: 0810 Product: e501)",
+]);
+
 function gpid(gp: Gamepad) {
   return `${gp.id}_${gp.index}`;
 }
@@ -60,7 +64,6 @@ class Inputs implements IUpdateable {
   }
 
   updateGamepad(gp: Gamepad) {
-    console.log(gp.axes);
     const gpState = new Map<string, boolean>();
     gpState.set("X", gp.buttons[2]?.pressed || false);
     gpState.set("Y", gp.buttons[3]?.pressed || false);
@@ -75,10 +78,17 @@ class Inputs implements IUpdateable {
         false
     );
 
-    gpState.set("ArrowLeft", gp.buttons[14]?.pressed || false);
-    gpState.set("ArrowRight", gp.buttons[15]?.pressed || false);
-    gpState.set("ArrowUp", gp.buttons[12]?.pressed || false);
-    gpState.set("ArrowDown", gp.buttons[13]?.pressed || false);
+    if (buttonIsAxisGamepads.has(gp.id.trim())) {
+      gpState.set("ArrowLeft", (gp.axes[0] ?? 0) < -0.5);
+      gpState.set("ArrowRight", (gp.axes[0] ?? 0) > 0.5);
+      gpState.set("ArrowUp", (gp.axes[1] ?? 0) < -0.5);
+      gpState.set("ArrowDown", (gp.axes[1] ?? 0) > 0.5);
+    } else {
+      gpState.set("ArrowLeft", gp.buttons[14]?.pressed || false);
+      gpState.set("ArrowRight", gp.buttons[15]?.pressed || false);
+      gpState.set("ArrowUp", gp.buttons[12]?.pressed || false);
+      gpState.set("ArrowDown", gp.buttons[13]?.pressed || false);
+    }
 
     const pressed = new Set<string>();
     gpState.forEach((isPressed, code) => {
