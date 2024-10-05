@@ -1,6 +1,5 @@
-import { ctx } from "@cat_in_the_dark/raylib-wasm";
 import { Raylib } from "@cat_in_the_dark/raylib-wasm";
-import { AssetsManager, loadAssets } from "./assets";
+import { loadAssets } from "./assets";
 import { inputs } from "./lib/inputs";
 import { sceneManager } from "./lib/scene-manager";
 import { GameScene } from "./scenes/game";
@@ -15,17 +14,20 @@ export async function main(rl: Raylib) {
   const am = await loadAssets();
 
   const title = new TitleScene(am);
-  const game = new GameScene();
+  const game = new GameScene(am);
 
   sceneManager.put("title", title);
   sceneManager.put("game", game);
 
-  sceneManager.set("title");
+  sceneManager.set("game");
 
   rl.runLoop(() => {
-    sceneManager.update(rl.frameTime);
+    const dt = rl.frameTime;
+    sceneManager.update(dt);
     if (inputs.isPressed("Escape")) {
       sceneManager.set("title");
     }
+
+    inputs.update(dt);
   });
 }

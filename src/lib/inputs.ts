@@ -8,7 +8,6 @@ class Inputs implements IUpdateable {
   private pressedButtons: Map<string, Set<string>> = new Map();
 
   connect() {
-    console.log("BUM");
     this.pressedButtons.set("keyboard", new Set());
 
     window.addEventListener("keyup", (ev) => {
@@ -61,6 +60,7 @@ class Inputs implements IUpdateable {
   }
 
   updateGamepad(gp: Gamepad) {
+    console.log(gp.axes);
     const gpState = new Map<string, boolean>();
     gpState.set("X", gp.buttons[2]?.pressed || false);
     gpState.set("Y", gp.buttons[3]?.pressed || false);
