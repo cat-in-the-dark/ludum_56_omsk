@@ -1,6 +1,7 @@
-import { ctx, Texture } from "@cat_in_the_dark/raylib-wasm";
+import { ctx, type Font, type Texture } from "@cat_in_the_dark/raylib-wasm";
 
 export type AssetsManager = {
+  font: Font;
   logo: Texture;
   player: {
     frames: Texture[];
@@ -13,6 +14,8 @@ export type PlayerAssets = AssetsManager["player"][number];
 
 export async function loadAssets(): Promise<AssetsManager> {
   const { rl } = ctx;
+
+  const font = await rl.loadFont("assets/nes.ttf");
 
   const logo = await rl.loadTexture("logo.png");
 
@@ -31,6 +34,7 @@ export async function loadAssets(): Promise<AssetsManager> {
   ];
 
   return {
+    font,
     logo,
     player: [
       {
