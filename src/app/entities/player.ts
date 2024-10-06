@@ -5,21 +5,35 @@ import { Controls } from "../controls";
 
 export class Player implements IUpdateable, IDrawable {
   speed = 100;
+  dir = Vector2.right();
 
   constructor(
     public readonly id: number,
     public readonly pos: Vector2,
-    public readonly data: PlayerAssets,
+    public readonly assets: PlayerAssets,
     public readonly controls: Controls
   ) {}
 
   draw(): void {
-    this.data.frames[0]?.draw(this.pos);
+    this.assets.frames[0].drawRec(
+      this.assets.footRect.flipped(this.dir),
+      this.assets.footRect.moved(this.pos),
+      Vector2.zero()
+    );
+
+    this.assets.frames[0].drawRec(
+      this.assets.headRect.flipped(this.dir),
+      this.assets.headRect.moved(this.pos),
+      Vector2.zero()
+    );
   }
 
   update(dt: number): void {
-    console.log(dt);
     const [dir, dirName] = this.controls.dir();
+    if (dirName !== "") {
+      // save only changed dir
+      this.dir = dir;
+    }
     this.pos.x += dir.x * this.speed * dt;
   }
 }
