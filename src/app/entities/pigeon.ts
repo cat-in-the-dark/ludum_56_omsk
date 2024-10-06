@@ -48,12 +48,16 @@ export class Pigeon implements IUpdateable, IDrawable {
     this.nextSpawnCooldown -= dt;
 
     if (this.nextSpawnCooldown < 0) {
-      console.log('spawn');
+      console.log("spawn");
       this.nextSpawnCooldown = this.generatePoopCooldown();
       if (Math.random() < 0.3) {
-        this.game.falling.push(new Falling("egg", this.pos.clone(), new Vector2(0, 5)));
+        this.game.falling.push(
+          new Falling("egg", this.pos.clone(), new Vector2(0, 5))
+        );
       } else {
-        this.game.falling.push(new Falling("poop", this.pos.clone(), new Vector2(0, 5)));
+        this.game.falling.push(
+          new Falling("poop", this.pos.clone(), new Vector2(0, 5))
+        );
       }
     }
 
@@ -65,7 +69,7 @@ export class Pigeon implements IUpdateable, IDrawable {
   }
 
   generatePoopCooldown() {
-    return Math.random()*4+1;
+    return Math.random() * 4 + 1;
   }
 
   draw(): void {

@@ -16,7 +16,6 @@ import {
   rockAnimSpeed,
 } from "./consts";
 
-
 export type AssetsManager = Awaited<ReturnType<typeof loadAssets>>;
 export let am: AssetsManager; // global variable for easy access
 
@@ -160,9 +159,7 @@ export async function loadAssets() {
     await rl.loadTexture("assets/egg/4.png"),
   ];
 
-  const drinkFrames = [
-    await rl.loadTexture("assets/drink/1.png"),
-  ];
+  const drinkFrames = [await rl.loadTexture("assets/drink/1.png")];
 
   const poopFrames = [
     await rl.loadTexture("assets/poop/1.png"),
@@ -170,24 +167,9 @@ export async function loadAssets() {
   ];
 
   const falling = {
-    eggAnim: () => new Anim(
-      eggFrames,
-      eggAnimSpeed,
-      true,
-      false
-    ),
-    drinkAnim: () => new Anim(
-      drinkFrames,
-      0,
-      false,
-      true
-    ),
-    poopAnim: () => new Anim(
-      poopFrames,
-      0.5,
-      true,
-      false
-    )
+    eggAnim: () => new Anim(eggFrames, eggAnimSpeed, true, false),
+    drinkAnim: () => new Anim(drinkFrames, 0, false, true),
+    poopAnim: () => new Anim(poopFrames, 0.5, true, false),
   };
 
   const sfx = {
@@ -244,8 +226,7 @@ export async function loadAssets() {
     spawn: new Howl({
       src: "assets/audio/sfx/spawn.wav",
       volume: baseVolume + 0.5,
-    })
-
+    }),
   };
 
   return {

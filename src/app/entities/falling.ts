@@ -2,13 +2,17 @@ import { Vector2 } from "@cat_in_the_dark/math";
 import { Anim } from "../../lib/anim";
 import { IDrawable, IUpdateable } from "../../lib/interfaces/updateable";
 import { am } from "../assets";
-import { PlayerAttribution } from "../state";
 import { canvasHeight } from "../consts";
+import { PlayerAttribution } from "../state";
 
 export class Falling implements IUpdateable, IDrawable {
   currentAnim: Anim;
 
-  constructor(private type: keyof PlayerAttribution, public pos: Vector2, public vel: Vector2) {
+  constructor(
+    private type: keyof PlayerAttribution,
+    public pos: Vector2,
+    public vel: Vector2
+  ) {
     switch (this.type) {
       case "egg": {
         this.currentAnim = am.falling.eggAnim();

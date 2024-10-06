@@ -58,12 +58,10 @@ export class GameScene implements IScene {
         // console.log(layer.name, layer);
       }
     });
-
   }
 
   private setupColliders(layer: Layer) {
     for (const obj of layer.objects ?? []) {
-
       if (obj.width * obj.height < 0.1) {
         console.log("SKIP empty collider", obj);
         continue;
@@ -78,10 +76,15 @@ export class GameScene implements IScene {
 
   private setupStaticPigeons(layer: Layer) {
     for (const obj of layer.objects ?? []) {
-      const pigeon = new Pigeon(new Vector2(obj.x, obj.y), Vector2.right(), this, {
-        idle: 0,
-        damaged: pigeonDamagedSpeed,
-      });
+      const pigeon = new Pigeon(
+        new Vector2(obj.x, obj.y),
+        Vector2.right(),
+        this,
+        {
+          idle: 0,
+          damaged: pigeonDamagedSpeed,
+        }
+      );
       this.pigeons.push(pigeon);
     }
   }
@@ -122,10 +125,15 @@ export class GameScene implements IScene {
     // });
 
     gameState.playerStates.forEach((state, idx) => {
-      if ((state.pressStart && this.blinkCounter % 1 < 0.5) || (!state.pressStart)) {
+      if (
+        (state.pressStart && this.blinkCounter % 1 < 0.5) ||
+        !state.pressStart
+      ) {
         am.font.drawTextPro({
-          text: state.pressStart ? "PUSH START" : state.score.toString().padStart(6, "0"),
-          position: statusTextPosition.add( new Vector2( 88 * idx, 0 )) ,
+          text: state.pressStart
+            ? "PUSH START"
+            : state.score.toString().padStart(6, "0"),
+          position: statusTextPosition.add(new Vector2(88 * idx, 0)),
           fontSize: 10,
         });
       }

@@ -1,9 +1,9 @@
 import { allowedPlayerNumber } from "./consts";
 
 export type PlayerAttribution = {
-  drink: number,
-  egg: number,
-}
+  drink: number;
+  egg: number;
+};
 
 export class PlayerState {
   public pressStart = true;
@@ -17,7 +17,11 @@ export class PlayerState {
 export const gameState = {
   playerStates: [] as PlayerState[],
   reset() {
-    for (let playerNumber = 0; playerNumber < allowedPlayerNumber; playerNumber++) {
+    for (
+      let playerNumber = 0;
+      playerNumber < allowedPlayerNumber;
+      playerNumber++
+    ) {
       this.playerStates[playerNumber] = new PlayerState();
     }
   },
@@ -38,5 +42,5 @@ export const gameState = {
     if (this.playerStates[playerId]) {
       this.playerStates[playerId].pressStart = false;
     }
-  }
+  },
 };
