@@ -8,7 +8,7 @@ export const canvasRect = {
 };
 export const canvasOrig = { x: 0, y: 0 };
 
-const scale = 4;
+const scale = 2;
 export const windowWidth = canvasWidth * scale;
 export const windowHeight = canvasHeight * scale;
 

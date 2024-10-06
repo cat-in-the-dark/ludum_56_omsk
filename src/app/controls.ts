@@ -16,22 +16,22 @@ export class Controls implements IUpdateable {
   constructor(private mapping: Mapping, public id: string) {}
 
   dir(): [Vector2, Dirs] {
-    if (inputs.isPressed(this.mapping.left, this.id)) {
+    if (inputs.isDown(this.mapping.left, this.id)) {
       return [new Vector2(-1, 0), "LEFT"];
     }
-    if (inputs.isPressed(this.mapping.right, this.id)) {
+    if (inputs.isDown(this.mapping.right, this.id)) {
       return [new Vector2(1, 0), "RIGHT"];
     }
-    if (inputs.isPressed(this.mapping.up, this.id)) {
+    if (inputs.isDown(this.mapping.up, this.id)) {
       return [new Vector2(0, -1), "UP"];
     }
-    if (inputs.isPressed(this.mapping.down, this.id)) {
+    if (inputs.isDown(this.mapping.down, this.id)) {
       return [new Vector2(0, 1), "DOWN"];
     }
     return [new Vector2(0, 0), ""];
   }
-  dash() {
-    // TODO: it must be CLICK not pressed
+
+  fire() {
     return inputs.isPressed(this.mapping.fire, this.id);
   }
 
