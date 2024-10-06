@@ -4,7 +4,14 @@ import { inputs } from "../../lib/inputs";
 import { ITiledLevel } from "../../lib/interfaces/tiled-level";
 import { IScene, sceneManager } from "../../lib/scene-manager";
 import { am, LevelAsset } from "../assets";
-import { canvasHeight, canvasWidth, maxPlayer, Vector2Zero } from "../consts";
+import {
+  canvasHeight,
+  canvasWidth,
+  maxPlayer,
+  pigeonDamagedSpeed,
+  pigeonIdleSpeed,
+  Vector2Zero,
+} from "../consts";
 import {
   Controls,
   isArrows,
@@ -18,6 +25,7 @@ import { Player } from "../entities/player";
 import { Rock } from "../entities/rock";
 import { gameState } from "../state";
 import { Falling } from "../entities/falling";
+import { isCircleCollides } from "../phisics";
 
 const fontPosition = new Vector2(128, 0);
 const statusTextPosition = new Vector2(96, 24);
@@ -43,7 +51,7 @@ export class GameScene implements IScene {
       if (layer.name === "static-pigeons") {
         this.setupStaticPigeons(layer);
       } else {
-        console.log(layer.name, layer);
+        // console.log(layer.name, layer);
       }
     });
 
@@ -51,7 +59,10 @@ export class GameScene implements IScene {
 
   private setupStaticPigeons(layer: ITiledLevel["layers"][number]) {
     for (const obj of layer.objects ?? []) {
-      const pigeon = new Pigeon(new Vector2(obj.x, obj.y), Vector2.right());
+      const pigeon = new Pigeon(new Vector2(obj.x, obj.y), Vector2.right(), this, {
+        idle: 0,
+        damaged: pigeonDamagedSpeed,
+      });
       this.pigeons.push(pigeon);
     }
   }
@@ -126,6 +137,8 @@ export class GameScene implements IScene {
       return !falling.shouldDestroy();
     });
 
+    this.updatePhysics();
+
     this.handleNewPlayer();
 
     this.jingleTimer.update(dt);
@@ -134,6 +147,18 @@ export class GameScene implements IScene {
       this.jinglePlayed = true;
       am.sfx.jingle.stop();
       am.sfx.gameMusic.play();
+    }
+  }
+
+  private updatePhysics() {
+    for (const rock of this.rocks) {
+      for (const pigeon of this.pigeons) {
+        if (isCircleCollides(rock, pigeon)) {
+          console.log("AAAA");
+          rock.hit();
+          pigeon.hit(rock.playerID, rock.pos);
+        }
+      }
     }
   }
 

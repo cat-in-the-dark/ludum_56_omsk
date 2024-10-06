@@ -71,7 +71,7 @@ export class Player implements IUpdateable, IDrawable {
   private spawnRock(): void {
     am.sfx.throw.play();
     this.game.rocks.push(
-      new Rock(this.pos.clone(), Vector2.down(), this.rockSpeed)
+      new Rock(this.id, this.pos.clone(), Vector2.down(), this.rockSpeed)
     );
   }
 }
