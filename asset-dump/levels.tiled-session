@@ -7,9 +7,68 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "level-1.tmx": {
+            "scale": 2.7761111111111108,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 180.10806483890337,
+                "y": 144.08645187112268
+            }
+        },
+        "level-2.tmx": {
+            "expandedObjectLayers": [
+                7,
+                5,
+                6,
+                2,
+                8,
+                4,
+                9
+            ],
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 228.5,
+                "y": 185
+            }
+        },
+        "level-3.tmx": {
+            "expandedObjectLayers": [
+                7,
+                5,
+                6,
+                2,
+                8,
+                4
+            ],
+            "scale": 3,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 178,
+                "y": 151.66666666666663
+            }
+        },
+        "level-4.tmx": {
+            "expandedObjectLayers": [
+                7,
+                5,
+                6,
+                2,
+                8,
+                4,
+                9
+            ],
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 179,
+                "y": 214
+            }
+        }
     },
     "last.exportedFilePath": "E:/Projects/ludum_56_omsk/public/data/levels",
-    "last.imagePath": "E:/Projects/ludum_56_omsk/public/assets/player1",
+    "last.externalTilesetPath": "E:/Projects/ludum_56_omsk/asset-dump",
+    "last.imagePath": "E:/Projects/ludum_56_omsk/asset-dump",
     "map.height": 36,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
@@ -21,6 +80,7 @@
     "project": "levels.tiled-project",
     "recentFiles": [
     ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 8,

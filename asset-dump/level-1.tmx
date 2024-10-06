@@ -47,7 +47,7 @@
 </data>
  </layer>
  <objectgroup id="9" name="text" visible="0"/>
- <objectgroup color="#0055ff" id="2" name="static-pigeons" visible="0">
+ <objectgroup color="#0055ff" id="2" name="static-pigeons">
   <object id="19" x="64" y="80">
    <point/>
   </object>
