@@ -11,7 +11,7 @@ export class PlayerState {
   public attribution: PlayerAttribution = {
     drink: 0,
     egg: 0,
-  }
+  };
 }
 
 export const gameState = {

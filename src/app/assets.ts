@@ -7,6 +7,7 @@ import { ITiledLevel } from "../lib/interfaces/tiled-level";
 import { Rect } from "../lib/rect";
 import {
   baseVolume,
+  eggAnimSpeed,
   maxPlayer,
   pigeonDamagedAnimSpeed,
   pigeonIdleAnimSpeed,
@@ -152,6 +153,32 @@ export async function loadAssets() {
     );
   }
 
+  const eggFrames = [
+    await rl.loadTexture("assets/egg/1.png"),
+    await rl.loadTexture("assets/egg/2.png"),
+    await rl.loadTexture("assets/egg/3.png"),
+    await rl.loadTexture("assets/egg/4.png"),
+  ]
+
+  const drinkFrames = [
+    await rl.loadTexture("assets/drink/1.png"),
+  ];
+
+  const falling = {
+    eggAnim: () => new Anim(
+      eggFrames,
+      eggAnimSpeed,
+      true,
+      false
+    ),
+    drinkAnim: () => new Anim(
+      drinkFrames,
+      0,
+      false,
+      true
+    ),
+  };
+
   const sfx = {
     titleMusic: new Howl({
       src: "assets/audio/music/title.mp3",
@@ -215,6 +242,7 @@ export async function loadAssets() {
     font,
     logo,
     player,
+    falling,
     rockAnim,
     pigeonIdleAnim,
     pigeonDamagedAnim,

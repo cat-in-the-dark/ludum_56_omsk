@@ -25,10 +25,10 @@ export const rockAnimSpeed = 0.02;
 export const pigeonIdleAnimSpeed = 0.15;
 export const pigeonDamagedAnimSpeed = 0.1;
 
+export const eggAnimSpeed = 0.02;
+
 export const defaultPlayerSpeed = 150;
 export const defaultRockSpeed = 400;
 
-
 export const baseVolume = 0.5;
-
 export const allowedPlayerNumber = 2;

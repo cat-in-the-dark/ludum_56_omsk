@@ -17,6 +17,7 @@ import { Pigeon } from "../entities/pigeon";
 import { Player } from "../entities/player";
 import { Rock } from "../entities/rock";
 import { gameState } from "../state";
+import { Falling } from "../entities/falling";
 
 const fontPosition = new Vector2(128, 0);
 const statusTextPosition = new Vector2(96, 24);
@@ -25,6 +26,7 @@ export class GameScene implements IScene {
   players = new Map<string, Player>();
   rocks = new Array<Rock>();
   pigeons = new Array<Pigeon>();
+  falling = new Array<Falling>();
 
   jingleTimer = new Timer(2);
   jinglePlayed = false;
@@ -75,6 +77,10 @@ export class GameScene implements IScene {
       pigeon.draw();
     }
 
+    for (const falling of this.falling) {
+      falling.draw();
+    }
+
     // am.font.drawTextPro({
     //   text: "qazwsxerdcrfv\ntgbyhyhujmik,olp;",
     //   position: fontPosition,
@@ -113,6 +119,11 @@ export class GameScene implements IScene {
     this.pigeons = this.pigeons.filter((pigeon) => {
       pigeon.update(dt); // do it here just to save iterations
       return !pigeon.shouldDestroy();
+    });
+
+    this.falling = this.falling.filter((falling) => {
+      falling.update(dt);
+      return !falling.shouldDestroy();
     });
 
     this.handleNewPlayer();

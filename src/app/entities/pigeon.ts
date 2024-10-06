@@ -2,6 +2,8 @@ import { Vector2 } from "@cat_in_the_dark/math";
 import { Anim } from "../../lib/anim";
 import { IDrawable, IUpdateable } from "../../lib/interfaces/updateable";
 import { am } from "../assets";
+import { GameScene } from "../scenes/game";
+import { Falling } from "./falling";
 
 export class Pigeon implements IUpdateable, IDrawable {
   private animIdle: Anim;
@@ -9,7 +11,9 @@ export class Pigeon implements IUpdateable, IDrawable {
   private currentAnim: Anim;
   private offset: Vector2;
 
-  constructor(public pos: Vector2, public dir: Vector2) {
+  private nextSpawnCooldown = Math.random()*60*4+60;
+
+  constructor(public pos: Vector2, public dir: Vector2, public game: GameScene) {
     this.animIdle = am.pigeonIdleAnim();
     this.animDamaged = am.pigeonDamagedAnim();
     this.offset = new Vector2(
@@ -22,6 +26,11 @@ export class Pigeon implements IUpdateable, IDrawable {
 
   update(dt: number): void {
     this.currentAnim.update(dt);
+    this.nextSpawnCooldown -= dt;
+
+    if (this.nextSpawnCooldown < 0) {
+      this.game.falling.push(new Falling("egg", this.pos.clone(), new Vector2(0, -10)));
+    }
   }
 
   draw(): void {
