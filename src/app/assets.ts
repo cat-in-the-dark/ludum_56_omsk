@@ -3,7 +3,7 @@ import { Vector2 } from "@cat_in_the_dark/math";
 import { ctx } from "@cat_in_the_dark/raylib-wasm";
 import { Anim } from "../lib/anim";
 import { Rect } from "../lib/rect";
-import { maxPlayer, playerWalkAnimSpeed } from "./consts";
+import { maxPlayer, playerShootAnimSpeed, playerWalkAnimSpeed } from "./consts";
 
 export type AssetsManager = Awaited<ReturnType<typeof loadAssets>>;
 
@@ -32,6 +32,10 @@ export async function loadAssets() {
     [player1Frames[0], player1Frames[1], player1Frames[2], player1Frames[3]],
     playerWalkAnimSpeed
   );
+  const shootAnim1 = new Anim(
+    [player1Frames[0], player1Frames[1], player1Frames[2], player1Frames[3]],
+    playerShootAnimSpeed
+  );
 
   const player2Frames = [
     await rl.loadTexture("assets/player2/1.png"),
@@ -44,17 +48,23 @@ export async function loadAssets() {
     [player2Frames[0], player2Frames[1], player2Frames[2], player2Frames[3]],
     playerWalkAnimSpeed
   );
+  const shootAnim2 = new Anim(
+    [player2Frames[0], player2Frames[1], player2Frames[2], player2Frames[3]],
+    playerShootAnimSpeed
+  );
 
   const player = [
     {
       frames: player1Frames,
       walkAnim: walkAnim1,
+      shootAnim: shootAnim1,
       footRect: new Rect(new Vector2(0, 16), new Vector2(24, 8)),
       headRect: new Rect(new Vector2(0, 0), new Vector2(24, 16)),
     },
     {
       frames: player2Frames,
       walkAnim: walkAnim2,
+      shootAnim: shootAnim2,
       footRect: new Rect(new Vector2(0, 16), new Vector2(24, 8)),
       headRect: new Rect(new Vector2(0, 0), new Vector2(24, 16)),
     },

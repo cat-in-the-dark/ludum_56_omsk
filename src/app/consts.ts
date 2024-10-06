@@ -15,4 +15,5 @@ export const windowHeight = canvasHeight * scale;
 
 export const windowTVRect = { x: 0, y: 0, width: 800, height: 300 };
 
-export const playerWalkAnimSpeed = 10;
+export const playerWalkAnimSpeed = 0.1;
+export const playerShootAnimSpeed = 0.1;
