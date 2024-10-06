@@ -8,11 +8,77 @@ function gpid(gp: Gamepad) {
   return `${gp.id}_${gp.index}`;
 }
 
+class ButtonsMemory {
+  private pressedButtons: Map<string, Set<string>> = new Map();
+  private justPressed: Map<string, Set<string>> = new Map();
+  private justReleased: Map<string, Set<string>> = new Map();
+
+  isDown(code: string, id = "keyboard") {
+    return this.pressedButtons.get(id)?.has(code) || false;
+  }
+
+  isReleased(code: string, id = "keyboard") {
+    return this.justReleased.get(id)?.has(code) || false;
+  }
+
+  isPressed(code: string, id = "keyboard") {
+    return this.justPressed.get(id)?.has(code) || false;
+  }
+
+  connect(src: string) {
+    this.pressedButtons.set(src, new Set());
+    this.justPressed.set(src, new Set());
+    this.justReleased.set(src, new Set());
+  }
+
+  disconnect(src: string) {
+    this.pressedButtons.delete(src);
+    this.justPressed.delete(src);
+    this.justReleased.delete(src);
+  }
+
+  update(newPressedButtons: Map<string, Set<string>>) {
+    // console.log(newPressedButtons, this.pressedButtons);
+
+    for (const [, codes] of this.justPressed) {
+      codes.clear();
+    }
+    for (const [, codes] of this.justReleased) {
+      codes.clear();
+    }
+
+    for (const [src, codes] of newPressedButtons) {
+      for (const code of codes) {
+        const wasDown = this.pressedButtons.get(src)?.has(code) ?? false;
+        if (!wasDown) {
+          this.justPressed.get(src)?.add(code);
+        }
+      }
+    }
+
+    for (const [src, codes] of this.pressedButtons) {
+      for (const code of codes) {
+        const isDown = newPressedButtons.get(src)?.has(code) ?? false;
+        if (!isDown) {
+          this.justReleased.get(src)?.add(code);
+        }
+      }
+    }
+
+    this.pressedButtons.clear();
+    for (const [src, codes] of newPressedButtons) {
+      this.pressedButtons.set(src, new Set(codes));
+    }
+  }
+}
+
 class Inputs implements IUpdateable {
   private pressedButtons: Map<string, Set<string>> = new Map();
+  private memory = new ButtonsMemory();
 
   connect() {
     this.pressedButtons.set("keyboard", new Set());
+    this.memory.connect("keyboard");
 
     window.addEventListener("keyup", (ev) => {
       this.updateKeyboard(ev.code, false);
@@ -27,6 +93,7 @@ class Inputs implements IUpdateable {
 
       const gid = gpid(event.gamepad);
       this.pressedButtons.set(gid, new Set());
+      this.memory.connect(gid);
     });
 
     window.addEventListener("gamepaddisconnected", (event) => {
@@ -35,10 +102,11 @@ class Inputs implements IUpdateable {
 
       const gid = gpid(event.gamepad);
       this.pressedButtons.delete(gid);
+      this.memory.disconnect(gid);
     });
   }
 
-  updateKeyboard(code: string, isPressed: boolean) {
+  private updateKeyboard(code: string, isPressed: boolean) {
     if (isPressed) {
       this.pressedButtons.get("keyboard")?.add(code);
     } else {
@@ -47,7 +115,15 @@ class Inputs implements IUpdateable {
   }
 
   isPressed(code: string, id = "keyboard") {
-    return this.pressedButtons.get(id)?.has(code) || false;
+    return this.memory.isPressed(code, id);
+  }
+
+  isDown(code: string, id = "keyboard") {
+    return this.memory.isDown(code, id);
+  }
+
+  isReleased(code: string, id = "keyboard") {
+    return this.memory.isReleased(code, id);
   }
 
   getPressed() {
@@ -63,7 +139,7 @@ class Inputs implements IUpdateable {
     return false;
   }
 
-  updateGamepad(gp: Gamepad) {
+  private updateGamepad(gp: Gamepad) {
     const gpState = new Map<string, boolean>();
     gpState.set("X", gp.buttons[2]?.pressed || false);
     gpState.set("Y", gp.buttons[3]?.pressed || false);
@@ -113,6 +189,8 @@ class Inputs implements IUpdateable {
         this.updateGamepad(gp);
       }
     });
+
+    this.memory.update(this.pressedButtons);
   }
 
   debug() {

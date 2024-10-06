@@ -1,10 +1,16 @@
 import { Vector2 } from "@cat_in_the_dark/math";
-import { ctx } from "@cat_in_the_dark/raylib-wasm";
+import { inputs } from "../../lib/inputs";
+import { IScene } from "../../lib/scene-manager";
 import { AssetsManager } from "../assets";
-import { isArrows, isWASD } from "../controls";
+import {
+  Controls,
+  isArrows,
+  isWASD,
+  newArrowControls,
+  newGampePadControls,
+  newWasdControls,
+} from "../controls";
 import { Player } from "../entities/player";
-import { inputs } from "../lib/inputs";
-import { IScene } from "../lib/scene-manager";
 
 const position = new Vector2(128, 128);
 
@@ -18,22 +24,24 @@ export class GameScene implements IScene {
     this.players = new Map();
   }
 
-  update(dt: number): void {
-    const { rl } = ctx;
+  draw(): void {
+    this.am.logo.draw(Vector2.zero(), 0, 6);
+    for (const [, player] of this.players) {
+      player.draw();
+    }
+    this.am.font.drawTextPro({
+      text: "qazwsxerdcrfv\ntgbyhyhujmik,olp;",
+      position,
+      fontSize: 12,
+    });
+  }
 
-    for (const [key, player] of this.players) {
+  update(dt: number): void {
+    for (const [, player] of this.players) {
       player.update(dt);
     }
 
     this.handleNewPlayer();
-
-    rl.drawing(() => {
-      rl.clearBackground(rl.GOLD);
-      for (const [key, player] of this.players) {
-        player.draw();
-      }
-      this.am.font.drawTextPro({ text: "qazwsxerdcrfv\ntgbyhyhujmik,olp;", position, fontSize: 12 });
-    });
   }
 
   exit(): void {
@@ -43,21 +51,21 @@ export class GameScene implements IScene {
   private trySpawn(id: string, keys: Set<string>) {
     if (id === "keyboard" && !this.players.has("wasd") && isWASD(keys)) {
       console.log("Spawn WASD");
-      this.players.set("wasd", this.spawnPlayer());
+      this.players.set("wasd", this.spawnPlayer(newWasdControls()));
     } else if (
       id === "keyboard" &&
       !this.players.has("arrows") &&
       isArrows(keys)
     ) {
       console.log("Spawn ARROWS");
-      this.players.set("arrows", this.spawnPlayer());
+      this.players.set("arrows", this.spawnPlayer(newArrowControls()));
     } else if (id !== "keyboard" && !this.players.has(id)) {
       console.log("Spawn: ", id);
-      this.players.set(id, this.spawnPlayer());
+      this.players.set(id, this.spawnPlayer(newGampePadControls(id)));
     }
   }
 
-  private spawnPlayer(): Player {
+  private spawnPlayer(controls: Controls): Player {
     const playerID = this.players.size;
     const pos = this.spawnPoses[playerID];
     if (!pos) {
@@ -68,7 +76,7 @@ export class GameScene implements IScene {
       throw new Error(`Unknown playerData for playerID=${playerID}`);
     }
 
-    return new Player(playerID, pos, playerAssets);
+    return new Player(playerID, pos, playerAssets, controls);
   }
 
   private handleNewPlayer() {
