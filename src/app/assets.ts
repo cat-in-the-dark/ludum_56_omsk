@@ -5,6 +5,8 @@ import { Anim } from "../lib/anim";
 import { Rect } from "../lib/rect";
 import {
   maxPlayer,
+  pigeonDamagedAnimSpeed,
+  pigeonIdleAnimSpeed,
   playerShootAnimSpeed,
   playerWalkAnimSpeed,
   rockAnimSpeed,
@@ -34,6 +36,21 @@ export async function loadAssets() {
 
   // const titleMusic = await rl.loadSound("assets/audio/music/title.mp3");
   // const gameMusic = await rl.loadSound("assets/audio/music/pigeon-jazz.mp3");
+
+  const idlePigeonFrames = [
+    await rl.loadTexture("assets/pigeon/1.png"),
+    await rl.loadTexture("assets/pigeon/2.png"),
+  ];
+  const pigeonIdleAnim = () => new Anim(idlePigeonFrames, pigeonIdleAnimSpeed);
+
+  const damagedPigeonFrames = [
+    await rl.loadTexture("assets/pigeon-damage/1.png"),
+    await rl.loadTexture("assets/pigeon-damage/2.png"),
+    await rl.loadTexture("assets/pigeon-damage/3.png"),
+    await rl.loadTexture("assets/pigeon-damage/4.png"),
+  ];
+  const pigeonDamagedAnim = () =>
+    new Anim(damagedPigeonFrames, pigeonDamagedAnimSpeed);
 
   const rockFrames = [
     await rl.loadTexture("assets/rock/1.png"),
@@ -106,5 +123,7 @@ export async function loadAssets() {
     logo,
     player,
     rockAnim,
+    pigeonIdleAnim,
+    pigeonDamagedAnim,
   } as const;
 }

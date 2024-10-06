@@ -11,24 +11,28 @@ import {
   newGampePadControls,
   newWasdControls,
 } from "../controls";
+import { Pigeon } from "../entities/pigeon";
 import { Player } from "../entities/player";
 import { Rock } from "../entities/rock";
 
 const fontPosition = new Vector2(128, 0);
 
 export class GameScene implements IScene {
-  players: Map<string, Player> = new Map();
+  players = new Map<string, Player>();
+  rocks = new Array<Rock>();
+  pigeons = new Array<Pigeon>();
+
   private spawnPoses = [
     new Vector2(64, canvasHeight - 64),
     new Vector2(canvasWidth - 64, canvasHeight - 64),
   ];
 
-  rocks = new Array<Rock>();
-
   constructor() {}
 
   activate(): void {
     this.players = new Map();
+
+    this.pigeons.push(new Pigeon(new Vector2(180, 32), Vector2.down()));
   }
 
   draw(): void {
@@ -39,6 +43,10 @@ export class GameScene implements IScene {
 
     for (const rock of this.rocks) {
       rock.draw();
+    }
+
+    for (const pigeon of this.pigeons) {
+      pigeon.draw();
     }
 
     am.font.drawTextPro({
@@ -55,6 +63,10 @@ export class GameScene implements IScene {
 
     for (const rock of this.rocks) {
       rock.update(dt);
+    }
+
+    for (const pigeon of this.pigeons) {
+      pigeon.update(dt);
     }
 
     this.handleNewPlayer();
