@@ -2,6 +2,7 @@ import { Vector2 } from "@cat_in_the_dark/math";
 import { inputs } from "../../lib/inputs";
 import { IScene } from "../../lib/scene-manager";
 import { AssetsManager } from "../assets";
+import { maxPlayer } from "../consts";
 import {
   Controls,
   isArrows,
@@ -80,7 +81,7 @@ export class GameScene implements IScene {
   }
 
   private handleNewPlayer() {
-    if (this.players.size >= 4) {
+    if (this.players.size >= maxPlayer) {
       console.warn("Players limit already reached");
       return;
     }

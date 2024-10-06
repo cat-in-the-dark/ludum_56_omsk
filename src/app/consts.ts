@@ -1,3 +1,4 @@
+export const maxPlayer = 2;
 export const canvasWidth = 360;
 export const canvasHeight = 288;
 export const canvasRect = {

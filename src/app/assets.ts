@@ -1,8 +1,9 @@
+/* eslint-disable max-lines-per-function */
 import { Vector2 } from "@cat_in_the_dark/math";
 import { ctx } from "@cat_in_the_dark/raylib-wasm";
 import { Anim } from "../lib/anim";
 import { Rect } from "../lib/rect";
-import { playerWalkAnimSpeed } from "./consts";
+import { maxPlayer, playerWalkAnimSpeed } from "./consts";
 
 export type AssetsManager = Awaited<ReturnType<typeof loadAssets>>;
 
@@ -44,22 +45,29 @@ export async function loadAssets() {
     playerWalkAnimSpeed
   );
 
+  const player = [
+    {
+      frames: player1Frames,
+      walkAnim: walkAnim1,
+      footRect: new Rect(new Vector2(0, 16), new Vector2(24, 8)),
+      headRect: new Rect(new Vector2(0, 0), new Vector2(24, 16)),
+    },
+    {
+      frames: player2Frames,
+      walkAnim: walkAnim2,
+      footRect: new Rect(new Vector2(0, 16), new Vector2(24, 8)),
+      headRect: new Rect(new Vector2(0, 0), new Vector2(24, 16)),
+    },
+  ] as const;
+  if (player.length !== maxPlayer) {
+    throw new Error(
+      `Expected assets for ${maxPlayer} players, got: ${player.length}`
+    );
+  }
+
   return {
     font,
     logo,
-    player: [
-      {
-        frames: player1Frames,
-        walkAnim: walkAnim1,
-        footRect: new Rect(new Vector2(0, 16), new Vector2(24, 8)),
-        headRect: new Rect(new Vector2(0, 0), new Vector2(24, 16)),
-      },
-      {
-        frames: player2Frames,
-        walkAnim: walkAnim2,
-        footRect: new Rect(new Vector2(0, 16), new Vector2(24, 8)),
-        headRect: new Rect(new Vector2(0, 0), new Vector2(24, 16)),
-      },
-    ],
+    player,
   } as const;
 }
