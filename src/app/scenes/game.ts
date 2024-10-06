@@ -1,8 +1,8 @@
 import { Vector2 } from "@cat_in_the_dark/math";
 import { inputs } from "../../lib/inputs";
 import { IScene } from "../../lib/scene-manager";
-import { AssetsManager } from "../assets";
-import { maxPlayer } from "../consts";
+import { am } from "../assets";
+import { canvasHeight, canvasWidth, maxPlayer } from "../consts";
 import {
   Controls,
   isArrows,
@@ -12,34 +12,49 @@ import {
   newWasdControls,
 } from "../controls";
 import { Player } from "../entities/player";
+import { Rock } from "../entities/rock";
 
-const position = new Vector2(128, 128);
+const fontPosition = new Vector2(128, 0);
 
 export class GameScene implements IScene {
   players: Map<string, Player> = new Map();
-  private spawnPoses = [new Vector2(16, 16), new Vector2(64, 16)];
+  private spawnPoses = [
+    new Vector2(64, canvasHeight - 64),
+    new Vector2(canvasWidth - 64, canvasHeight - 64),
+  ];
 
-  constructor(private am: AssetsManager) {}
+  rocks = new Array<Rock>();
+
+  constructor() {}
 
   activate(): void {
     this.players = new Map();
   }
 
   draw(): void {
-    this.am.logo.draw(Vector2.zero(), 0, 6);
+    am.logo.draw(Vector2.zero(), 0, 6);
     for (const [, player] of this.players) {
       player.draw();
     }
-    this.am.font.drawTextPro({
+
+    for (const rock of this.rocks) {
+      rock.draw();
+    }
+
+    am.font.drawTextPro({
       text: "qazwsxerdcrfv\ntgbyhyhujmik,olp;",
-      position,
-      fontSize: 12,
+      position: fontPosition,
+      fontSize: 10,
     });
   }
 
   update(dt: number): void {
     for (const [, player] of this.players) {
       player.update(dt);
+    }
+
+    for (const rock of this.rocks) {
+      rock.update(dt);
     }
 
     this.handleNewPlayer();
@@ -72,17 +87,16 @@ export class GameScene implements IScene {
     if (!pos) {
       throw new Error(`Unknown spawnPoses for playerID=${playerID}`);
     }
-    const playerAssets = this.am.player[playerID];
+    const playerAssets = am.player[playerID];
     if (!playerAssets) {
       throw new Error(`Unknown playerData for playerID=${playerID}`);
     }
 
-    return new Player(playerID, pos, playerAssets, controls);
+    return new Player(playerID, pos, playerAssets, controls, this);
   }
 
   private handleNewPlayer() {
     if (this.players.size >= maxPlayer) {
-      console.warn("Players limit already reached");
       return;
     }
 

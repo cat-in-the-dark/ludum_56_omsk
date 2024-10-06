@@ -5,19 +5,32 @@ export class Anim implements IUpdateable {
   private currentFrameIdx = 0;
   private time = 0;
 
-  constructor(public frames: Texture[], public animationSpeed: number) {}
+  constructor(
+    public frames: Texture[],
+    public animationSpeed: number,
+    public looping = true,
+    public finished = false
+  ) {}
 
   update(dt: number): void {
+    if (this.finished) {
+      return;
+    }
+
     this.time += dt;
     if (this.time >= this.animationSpeed) {
       this.time = 0;
       this.currentFrameIdx = (this.currentFrameIdx + 1) % this.frames.length;
+      if (this.currentFrameIdx >= this.frames.length - 1 && !this.looping) {
+        this.finished = true;
+      }
     }
   }
 
   reset() {
     this.time = 0;
     this.currentFrameIdx = 0;
+    this.finished = false;
   }
 
   get frame(): Texture {
