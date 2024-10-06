@@ -12,15 +12,15 @@ importers:
         specifier: ^0.0.2
         version: 0.0.2
       '@cat_in_the_dark/raylib-wasm':
-        specifier: ^0.0.13
-        version: 0.0.13
-      '@types/howler':
-        specifier: ^2.2.12
-        version: 2.2.12
+        specifier: ^0.0.14
+        version: 0.0.14
       howler:
         specifier: ^2.2.4
         version: 2.2.4
     devDependencies:
+      '@types/howler':
+        specifier: ^2.2.12
+        version: 2.2.12
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.8.0
         version: 8.8.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.5.4))(eslint@8.57.1)(typescript@5.5.4)
@@ -45,8 +45,8 @@ packages:
   '@cat_in_the_dark/math@0.0.2':
     resolution: {integrity: sha512-hG9Kq2m45YmUEpNng8ieTnd99t787CR7TVOvaHoBbUbKx/S1Qc2rRTvg3xnctz6tP9+ittR2D0csZoDh54UL9Q==}
 
-  '@cat_in_the_dark/raylib-wasm@0.0.13':
-    resolution: {integrity: sha512-tUFNTzliaHrFaqR9h1cFu9nb4yVbwDTrULmSteqws3/lZewbfxoL/X2tVt9Idxal3mELzZZGYoNlimwd6F4dSA==}
+  '@cat_in_the_dark/raylib-wasm@0.0.14':
+    resolution: {integrity: sha512-u5RTFTZCzfs2aXw86vXjS0IMSHUBsozjkm7kgwFxUvGXfd09HaoQYFCEX86YJMAmhuhleyDWDe2tcD377euNUw==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -1199,7 +1199,7 @@ snapshots:
 
   '@cat_in_the_dark/math@0.0.2': {}
 
-  '@cat_in_the_dark/raylib-wasm@0.0.13': {}
+  '@cat_in_the_dark/raylib-wasm@0.0.14': {}
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true

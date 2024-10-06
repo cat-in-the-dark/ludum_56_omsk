@@ -12,6 +12,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "@typescript-eslint/parser": "^8.8.0",
+    "@types/howler": "^2.2.12",
     "eslint": "^8.31.0",
     "eslint-plugin-import": "^2.26.0",
     "typescript": "5.5.4",
@@ -19,8 +20,7 @@
   },
   "dependencies": {
     "@cat_in_the_dark/math": "^0.0.2",
-    "@cat_in_the_dark/raylib-wasm": "^0.0.13",
-    "@types/howler": "^2.2.12",
+    "@cat_in_the_dark/raylib-wasm": "^0.0.14",
     "howler": "^2.2.4"
   },
   "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"

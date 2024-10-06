@@ -6,9 +6,7 @@ import { PlayerAttribution } from "../state";
 import { canvasHeight } from "../consts";
 
 export class Falling implements IUpdateable, IDrawable {
-
   currentAnim: Anim;
-  sh
 
   constructor(private type: keyof PlayerAttribution, public pos: Vector2, public vel: Vector2) {
     switch (this.type) {
