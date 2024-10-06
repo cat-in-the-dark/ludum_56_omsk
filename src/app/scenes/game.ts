@@ -48,18 +48,7 @@ export class GameScene implements IScene {
     new Vector2(canvasWidth - 64, canvasHeight - 64),
   ];
 
-  constructor(private level: LevelAsset, public readonly nextLevel: string) {
-    level.map.layers.forEach((layer) => {
-      if (layer.name === "static-pigeons") {
-        this.setupStaticPigeons(layer);
-      } else if (layer.name === "colliders") {
-        this.setupColliders(layer);
-        console.log(layer);
-      } else {
-        // console.log(layer.name, layer);
-      }
-    });
-  }
+  constructor(private level: LevelAsset, public readonly nextLevel: string) {}
 
   private setupColliders(layer: Layer) {
     for (const obj of layer.objects ?? []) {
@@ -91,6 +80,22 @@ export class GameScene implements IScene {
   }
 
   activate(): void {
+    this.rocks = [];
+    this.pigeons = [];
+    this.falling = [];
+    this.colliders = [];
+
+    this.level.map.layers.forEach((layer) => {
+      if (layer.name === "static-pigeons") {
+        this.setupStaticPigeons(layer);
+      } else if (layer.name === "colliders") {
+        this.setupColliders(layer);
+        console.log(layer);
+      } else {
+        // console.log(layer.name, layer);
+      }
+    });
+
     this.jingleTimer.reset();
     this.jinglePlayed = false;
     this.players = new Map();
