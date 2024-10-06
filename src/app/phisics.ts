@@ -19,6 +19,48 @@ export function isCircleCollides(a: Circle, b: Circle): boolean {
   return a.pos.distanceTo(b.pos) < a.radius + b.radius;
 }
 
+export function pointWhereOnBox(
+  pos: Vector2,
+  rect: Rect
+): "UP" | "DOWN" | "LEFT" | "RIGHT" {
+  const xl = rect.pos.x;
+  const xr = rect.pos.x + rect.size.x;
+
+  const yd = rect.pos.y; // upper
+
+  if (pos.x > xl && pos.x < xr) {
+    if (pos.y < yd) {
+      return "UP";
+    }
+    return "DOWN";
+  }
+
+  if (pos.x < xl) {
+    return "LEFT";
+  }
+
+  return "RIGHT";
+}
+
+export function pointOnBox(pos: Vector2, rect: Rect) {
+  let qx = pos.x - rect.pos.x;
+  let qy = pos.y - rect.pos.y;
+
+  if (qx > rect.size.x) {
+    qx = rect.size.x;
+  } else if (qx < -rect.size.x) {
+    qx = -rect.size.x;
+  }
+
+  if (qy > rect.size.y) {
+    qy = rect.size.y;
+  } else if (qy < -rect.size.y) {
+    qy = -rect.size.y;
+  }
+
+  return new Vector2(qx + pos.x, qy + pos.y);
+}
+
 export function circleRect(c: Circle, r: Rect): boolean {
   const cx = c.pos.x;
   const cy = c.pos.y;

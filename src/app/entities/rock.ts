@@ -18,7 +18,7 @@ export class Rock implements IUpdateable, IDrawable {
   ) {
     this.anim = am.rockAnim();
     this.offset = new Vector2(this.anim.frame.width / 2, 0);
-    this.radius = this.anim.frame.width / 1.2;
+    this.radius = this.anim.frame.width / 1.1;
   }
 
   draw(): void {

@@ -198,6 +198,15 @@ export class GameScene implements IScene {
       }
 
       if (pigeon.state === "damaged") {
+        for (const otherPigeon of this.pigeons) {
+          if (
+            otherPigeon.state === "idle" &&
+            isCircleCollides(pigeon, otherPigeon)
+          ) {
+            pigeon.hittedByPigeon(otherPigeon);
+            otherPigeon.hitPigeon(pigeon);
+          }
+        }
         for (const wall of this.colliders) {
           if (circleRect(pigeon, wall)) {
             pigeon.hitWall(wall);

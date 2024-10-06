@@ -34,4 +34,6 @@ export const baseVolume = 0.5;
 export const allowedPlayerNumber = 2;
 
 export const pigeonIdleSpeed = 50;
-export const pigeonDamagedSpeed = 250;
+export const pigeonDamagedSpeed = 100;
+
+export const pigeonGravity = 100;
