@@ -1,7 +1,7 @@
 import { Vector2 } from "@cat_in_the_dark/math";
 import { Timer } from "../../lib/coroutines/timer";
 import { inputs } from "../../lib/inputs";
-import { ITiledLevel } from "../../lib/interfaces/tiled-level";
+import { Layer } from "../../lib/interfaces/tiled-level";
 import { IScene, sceneManager } from "../../lib/scene-manager";
 import { am, LevelAsset } from "../assets";
 import {
@@ -9,7 +9,6 @@ import {
   canvasWidth,
   maxPlayer,
   pigeonDamagedSpeed,
-  pigeonIdleSpeed,
   Vector2Zero,
 } from "../consts";
 import {
@@ -20,12 +19,13 @@ import {
   newGampePadControls,
   newWasdControls,
 } from "../controls";
+import { Collider } from "../entities/collider";
+import { Falling } from "../entities/falling";
 import { Pigeon } from "../entities/pigeon";
 import { Player } from "../entities/player";
 import { Rock } from "../entities/rock";
+import { circleRect, isCircleCollides } from "../phisics";
 import { gameState } from "../state";
-import { Falling } from "../entities/falling";
-import { isCircleCollides } from "../phisics";
 
 const fontPosition = new Vector2(128, 0);
 const statusTextPosition = new Vector2(96, 24);
@@ -35,6 +35,7 @@ export class GameScene implements IScene {
   rocks = new Array<Rock>();
   pigeons = new Array<Pigeon>();
   falling = new Array<Falling>();
+  colliders = new Array<Collider>();
 
   jingleTimer = new Timer(2);
   jinglePlayed = false;
@@ -50,6 +51,9 @@ export class GameScene implements IScene {
     level.map.layers.forEach((layer) => {
       if (layer.name === "static-pigeons") {
         this.setupStaticPigeons(layer);
+      } else if (layer.name === "colliders") {
+        this.setupColliders(layer);
+        console.log(layer);
       } else {
         // console.log(layer.name, layer);
       }
@@ -57,7 +61,21 @@ export class GameScene implements IScene {
 
   }
 
-  private setupStaticPigeons(layer: ITiledLevel["layers"][number]) {
+  private setupColliders(layer: Layer) {
+    for (const obj of layer.objects ?? []) {
+      if (obj.width * obj.height < 0.1) {
+        console.log("SKIP empty collider", obj);
+        continue;
+      }
+      const col = new Collider(
+        new Vector2(obj.x, obj.y),
+        new Vector2(obj.width, obj.height)
+      );
+      this.colliders.push(col);
+    }
+  }
+
+  private setupStaticPigeons(layer: Layer) {
     for (const obj of layer.objects ?? []) {
       const pigeon = new Pigeon(new Vector2(obj.x, obj.y), Vector2.right(), this, {
         idle: 0,
@@ -78,6 +96,10 @@ export class GameScene implements IScene {
     this.level.background.draw(Vector2Zero);
     for (const [, player] of this.players) {
       player.draw();
+    }
+
+    for (const col of this.colliders) {
+      col.draw();
     }
 
     for (const rock of this.rocks) {
@@ -151,12 +173,26 @@ export class GameScene implements IScene {
   }
 
   private updatePhysics() {
-    for (const rock of this.rocks) {
-      for (const pigeon of this.pigeons) {
+    for (const pigeon of this.pigeons) {
+      if (pigeon.shouldDestroy()) {
+        continue;
+      }
+
+      for (const rock of this.rocks) {
+        if (rock.shouldDestroy()) {
+          continue;
+        }
         if (isCircleCollides(rock, pigeon)) {
-          console.log("AAAA");
           rock.hit();
-          pigeon.hit(rock.playerID, rock.pos);
+          pigeon.hitRock(rock);
+        }
+      }
+
+      if (pigeon.state === "damaged") {
+        for (const wall of this.colliders) {
+          if (circleRect(pigeon, wall)) {
+            pigeon.hitWall(wall);
+          }
         }
       }
     }

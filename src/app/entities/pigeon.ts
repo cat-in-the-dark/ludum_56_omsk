@@ -3,9 +3,11 @@ import { Anim } from "../../lib/anim";
 import { IDrawable, IUpdateable } from "../../lib/interfaces/updateable";
 import { am } from "../assets";
 import { GameScene } from "../scenes/game";
+import { Collider } from "./collider";
 import { Falling } from "./falling";
+import { Rock } from "./rock";
 
-type States = "idle" | "damaged";
+export type PigeonStates = "idle" | "damaged";
 
 export class Pigeon implements IUpdateable, IDrawable {
   private nextSpawnCooldown = Math.random()*60*4+60;
@@ -14,7 +16,7 @@ export class Pigeon implements IUpdateable, IDrawable {
     damaged: Anim;
   };
   private offset: Vector2;
-  private state: States = "idle";
+  public state: PigeonStates = "idle";
   public radius: number;
   public hp = 6;
   public playerID: number | undefined = undefined;
@@ -63,11 +65,20 @@ export class Pigeon implements IUpdateable, IDrawable {
     return this.hp <= 0;
   }
 
-  hit(playerID: number, collisionPoint: Vector2) {
-    this.playerID = playerID;
+  hitRock(rock: Rock) {
+    console.log("BUM", rock);
+    this.playerID = rock.playerID;
     this.state = "damaged";
     this.hp -= 1;
 
-    this.dir = this.pos.minus(collisionPoint).normalized;
+    // scores[playerID] += pigeonScore;
+
+    this.dir = this.pos.minus(rock.pos).normalized;
+  }
+
+  hitWall(wall: Collider) {
+    this.hp -= 1;
+    this.dir.x *= -1;
+    this.dir.y *= -1;
   }
 }
