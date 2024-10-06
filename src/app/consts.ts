@@ -13,11 +13,18 @@ export const canvasOrig = { x: 0, y: 0 };
 
 export const Vector2Zero = new Vector2(0, 0);
 
-const scale = 2;
-export const windowWidth = canvasWidth * scale;
-export const windowHeight = canvasHeight * scale;
+// export const windowWidth = canvasWidth * scale;
+// export const windowHeight = canvasHeight * scale;
 
-export const windowTVRect = { x: 0, y: 0, width: 800, height: 300 };
+export const windowWidth = window.innerWidth;
+export const windowHeight = window.innerHeight;
+
+export const windowTVRect = {
+  x: 0,
+  y: 0,
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
 
 export const playerWalkAnimSpeed = 0.02;
 export const playerShootAnimSpeed = 0.04;
