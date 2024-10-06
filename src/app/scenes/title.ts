@@ -14,7 +14,7 @@ export class TitleScene implements IScene {
     const { rl } = ctx;
 
     rl.clearBackground(rl.PINK);
-    am.logo.draw(zero, 0, 4);
+    am.logo.draw(zero, 0, 1);
   }
 
   activate(): void {
@@ -24,7 +24,7 @@ export class TitleScene implements IScene {
   }
 
   update(dt: number): void {
-    if (inputs.isPressed("Space") || this.timer.invoke()) {
+    if (inputs.anyPressed()) {
       sceneManager.set("game1");
     }
 

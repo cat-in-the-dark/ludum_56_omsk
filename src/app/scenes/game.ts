@@ -19,6 +19,7 @@ import {
   newGampePadControls,
   newWasdControls,
 } from "../controls";
+import { BoyaraBalloon } from "../entities/boyaraballoon";
 import { Collider } from "../entities/collider";
 import { Falling } from "../entities/falling";
 import { Pigeon } from "../entities/pigeon";
@@ -37,6 +38,9 @@ export class GameScene implements IScene {
   pigeons = new Array<Pigeon>();
   falling = new Array<Falling>();
   colliders = new Array<Collider>();
+  balloons = new Array<BoyaraBalloon>();
+
+  nextSceneCounter = 2;
 
   jingleTimer = new Timer(2);
   jinglePlayed = false;
@@ -79,11 +83,24 @@ export class GameScene implements IScene {
     }
   }
 
+  private setupBoyaraBalloons(layer: Layer) {
+    for (const obj of layer.objects ?? []) {
+      console.log("BALLOON LAYER", layer);
+      const balloon = new BoyaraBalloon(
+        new Vector2(obj.x, obj.y)
+      );
+      console.log(balloon);
+      this.balloons.push(balloon);
+    }
+  }
+
   activate(): void {
     this.rocks = [];
     this.pigeons = [];
     this.falling = [];
     this.colliders = [];
+
+    this.nextSceneCounter = 2;
 
     this.level.map.layers.forEach((layer) => {
       if (layer.name === "static-pigeons") {
@@ -91,8 +108,10 @@ export class GameScene implements IScene {
       } else if (layer.name === "colliders") {
         this.setupColliders(layer);
         console.log(layer);
+      } else if (["bumpers-big", "bumpers-small", "balloons", "moving-pigeons"].includes(layer.name)) {
+        this.setupBoyaraBalloons(layer);
       } else {
-        // console.log(layer.name, layer);
+        console.log(layer.name);
       }
     });
 
@@ -123,6 +142,10 @@ export class GameScene implements IScene {
 
     for (const falling of this.falling) {
       falling.draw();
+    }
+
+    for (const b of this.balloons) {
+      b.draw();
     }
 
     // am.font.drawTextPro({
@@ -158,6 +181,8 @@ export class GameScene implements IScene {
     // @ts-expect-error жыж
     window.blinkCounter = this.blinkCounter;
 
+    this.nextSceneCounter -= dt;
+
     if (inputs.isPressed("Enter")) {
       sceneManager.set(this.nextLevel);
     }
@@ -181,6 +206,11 @@ export class GameScene implements IScene {
       return !falling.shouldDestroy();
     });
 
+    this.balloons = this.balloons.filter((balloons) => {
+      balloons.update(dt);
+      return !balloons.shouldDestroy();
+    });
+
     this.updatePhysics();
 
     this.handleNewPlayer();
@@ -198,6 +228,13 @@ export class GameScene implements IScene {
     for (const pigeon of this.pigeons) {
       if (pigeon.shouldDestroy()) {
         continue;
+      }
+
+      for (const b of this.balloons) {
+        if (isCircleCollides(b, pigeon)) {
+          b.popped = true;
+          this.falling.push(new Falling("drink", b.pos, new Vector2(0,2)));
+        }
       }
 
       for (const rock of this.rocks) {
@@ -235,6 +272,12 @@ export class GameScene implements IScene {
           gameState.attribute(player[1].id, falling.type);
         }
       }
+    }
+
+    if (this.pigeons.length < 1) {
+      sceneManager.set(this.nextLevel);
+    } else {
+      this.nextSceneCounter = 3;
     }
   }
 

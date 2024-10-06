@@ -57,15 +57,15 @@ export class Pigeon implements IUpdateable, IDrawable {
       this.nextSpawnCooldown = this.generatePoopCooldown();
       if (Math.random() < 0.3) {
         this.game.falling.push(
-          new Falling("egg", this.pos.clone(), new Vector2(0, 5))
+          new Falling("egg", this.pos.clone(), new Vector2(0, 3))
         );
       } else {
         this.game.falling.push(
-          new Falling("poop", this.pos.clone(), new Vector2(0, 5))
+          new Falling("poop", this.pos.clone(), new Vector2(0, 3))
         );
       }
     }
-    
+
     const dir = this.dir.scaledTo(dt * this.speed[this.state]);
     this.pos.x += dir.x;
     this.pos.y += dir.y;
@@ -82,11 +82,6 @@ export class Pigeon implements IUpdateable, IDrawable {
   }
 
   draw(): void {
-    am.font.drawTextPro({
-      text: this.nextSpawnCooldown.toString(),
-      position: this.pos,
-      fontSize: 8,
-    });
     this.anim[this.state].frame.draw(this.pos.minus(this.offset));
 
     // ctx.rl.drawCircle(this.pos, this.radius, ctx.rl.GREEN);

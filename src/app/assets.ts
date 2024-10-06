@@ -159,7 +159,7 @@ export async function loadAssets() {
     await rl.loadTexture("assets/egg/4.png"),
   ];
 
-  const drinkFrames = [await rl.loadTexture("assets/drink/1.png")];
+  const drinkFrames = [await rl.loadTexture("assets/bonus/1.png")];
 
   const poopFrames = [
     await rl.loadTexture("assets/poop/1.png"),
@@ -229,7 +229,7 @@ export async function loadAssets() {
     }),
   };
 
-  const balloon = new Anim([await rl.loadTexture("assets/balloon/1")],0,false,false);
+  const balloon = await rl.loadTexture("assets/balloon/1.png");
 
   return {
     sfx,
