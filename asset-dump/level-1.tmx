@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="45" height="36" tilewidth="8" tileheight="8" infinite="0" nextlayerid="9" nextobjectid="17">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="45" height="36" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="18">
  <editorsettings>
   <export target="../public/data/levels/level-1.json" format="json"/>
  </editorsettings>
@@ -44,6 +44,14 @@
 15,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,16
 </data>
  </layer>
+ <objectgroup id="9" name="text" visible="0">
+  <object id="17" x="48" y="152">
+   <properties>
+    <property name="text" value="ВСТАВИТЬ ТЕКСТ"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
  <objectgroup color="#0055ff" id="2" name="static-pigeons" visible="0">
   <object id="14" x="48" y="144">
    <point/>

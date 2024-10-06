@@ -50,6 +50,35 @@
          "y":0
         }, 
         {
+         "draworder":"topdown",
+         "id":9,
+         "name":"text",
+         "objects":[
+                {
+                 "height":0,
+                 "id":17,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"\u0412\u0421\u0422\u0410\u0412\u0418\u0422\u042c \u0422\u0415\u041a\u0421\u0422"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":48,
+                 "y":152
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":false,
+         "x":0,
+         "y":0
+        }, 
+        {
          "color":"#0055ff",
          "draworder":"topdown",
          "id":2,
@@ -296,8 +325,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":9,
- "nextobjectid":17,
+ "nextlayerid":10,
+ "nextobjectid":18,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.0",
