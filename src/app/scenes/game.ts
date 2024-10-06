@@ -51,7 +51,7 @@ export class GameScene implements IScene {
 
   private setupStaticPigeons(layer: ITiledLevel["layers"][number]) {
     for (const obj of layer.objects ?? []) {
-      const pigeon = new Pigeon(new Vector2(obj.x, obj.y), Vector2.right());
+      const pigeon = new Pigeon(new Vector2(obj.x, obj.y), Vector2.right(), this);
       this.pigeons.push(pigeon);
     }
   }

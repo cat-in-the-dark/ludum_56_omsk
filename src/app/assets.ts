@@ -158,10 +158,15 @@ export async function loadAssets() {
     await rl.loadTexture("assets/egg/2.png"),
     await rl.loadTexture("assets/egg/3.png"),
     await rl.loadTexture("assets/egg/4.png"),
-  ]
+  ];
 
   const drinkFrames = [
     await rl.loadTexture("assets/drink/1.png"),
+  ];
+
+  const poopFrames = [
+    await rl.loadTexture("assets/poop/1.png"),
+    await rl.loadTexture("assets/poop/2.png"),
   ];
 
   const falling = {
@@ -177,6 +182,12 @@ export async function loadAssets() {
       false,
       true
     ),
+    poopAnim: () => new Anim(
+      poopFrames,
+      0.5,
+      true,
+      false
+    )
   };
 
   const sfx = {

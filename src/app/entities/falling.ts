@@ -16,6 +16,10 @@ export class Falling implements IUpdateable, IDrawable {
         this.currentAnim = am.falling.eggAnim();
         break;
       }
+      case "poop": {
+        this.currentAnim = am.falling.poopAnim();
+        break;
+      }
       case "drink":
       default: {
         this.currentAnim = am.falling.drinkAnim();
