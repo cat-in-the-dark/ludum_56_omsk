@@ -61,13 +61,15 @@ export class GameScene implements IScene {
       player.update(dt);
     }
 
-    for (const rock of this.rocks) {
-      rock.update(dt);
-    }
+    this.rocks = this.rocks.filter((rock) => {
+      rock.update(dt); // do it here just to save iterations
+      return !rock.shouldDestroy();
+    });
 
-    for (const pigeon of this.pigeons) {
-      pigeon.update(dt);
-    }
+    this.pigeons = this.pigeons.filter((pigeon) => {
+      pigeon.update(dt); // do it here just to save iterations
+      return !pigeon.shouldDestroy();
+    });
 
     this.handleNewPlayer();
   }
