@@ -1,4 +1,5 @@
 import { Vector2 } from "@cat_in_the_dark/math";
+import { Timer } from "../../lib/coroutines/timer";
 import { inputs } from "../../lib/inputs";
 import { ITiledLevel } from "../../lib/interfaces/tiled-level";
 import { IScene, sceneManager } from "../../lib/scene-manager";
@@ -15,13 +16,20 @@ import {
 import { Pigeon } from "../entities/pigeon";
 import { Player } from "../entities/player";
 import { Rock } from "../entities/rock";
+import { gameState } from "../state";
 
 const fontPosition = new Vector2(128, 0);
+const statusTextPosition = new Vector2(96, 24);
 
 export class GameScene implements IScene {
   players = new Map<string, Player>();
   rocks = new Array<Rock>();
   pigeons = new Array<Pigeon>();
+
+  jingleTimer = new Timer(2);
+  jinglePlayed = false;
+
+  blinkCounter = 0;
 
   private spawnPoses = [
     new Vector2(64, canvasHeight - 64),
@@ -36,6 +44,7 @@ export class GameScene implements IScene {
         console.log(layer.name, layer);
       }
     });
+
   }
 
   private setupStaticPigeons(layer: ITiledLevel["layers"][number]) {
@@ -46,7 +55,10 @@ export class GameScene implements IScene {
   }
 
   activate(): void {
+    this.jingleTimer.reset();
+    this.jinglePlayed = false;
     this.players = new Map();
+    am.sfx.jingle.play();
   }
 
   draw(): void {
@@ -68,9 +80,23 @@ export class GameScene implements IScene {
     //   position: fontPosition,
     //   fontSize: 10,
     // });
+
+    gameState.playerStates.forEach((state, idx) => {
+      if ((state.pressStart && this.blinkCounter % 1 < 0.5) || (!state.pressStart)) {
+        am.font.drawTextPro({
+          text: state.pressStart ? "PUSH START" : state.score.toString().padStart(6, "0"),
+          position: statusTextPosition.add( new Vector2( 88 * idx, 0 )) ,
+          fontSize: 10,
+        });
+      }
+    });
   }
 
   update(dt: number): void {
+    this.blinkCounter += dt;
+    // @ts-expect-error жыж
+    window.blinkCounter = this.blinkCounter;
+
     if (inputs.isPressed("Enter")) {
       sceneManager.set(this.nextLevel);
     }
@@ -90,10 +116,18 @@ export class GameScene implements IScene {
     });
 
     this.handleNewPlayer();
+
+    this.jingleTimer.update(dt);
+
+    if (this.jingleTimer.isPassed && !this.jinglePlayed) {
+      this.jinglePlayed = true;
+      am.sfx.jingle.stop();
+      am.sfx.gameMusic.play();
+    }
   }
 
   exit(): void {
-    // ?
+    am.sfx.gameMusic.stop();
   }
 
   private trySpawn(id: string, keys: Set<string>) {

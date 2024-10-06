@@ -27,3 +27,8 @@ export const pigeonDamagedAnimSpeed = 0.1;
 
 export const defaultPlayerSpeed = 150;
 export const defaultRockSpeed = 400;
+
+
+export const baseVolume = 0.5;
+
+export const allowedPlayerNumber = 2;

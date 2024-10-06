@@ -4,6 +4,7 @@ import { Cooldown } from "../../lib/coroutines/cooldown";
 import { inputs } from "../../lib/inputs";
 import { IScene, sceneManager } from "../../lib/scene-manager";
 import { am } from "../assets";
+import { gameState } from "../state";
 
 const zero = Vector2.zero();
 
@@ -17,7 +18,9 @@ export class TitleScene implements IScene {
   }
 
   activate(): void {
+    gameState.reset();
     this.timer.reset();
+    am.sfx.titleMusic.play();
   }
 
   update(dt: number): void {
@@ -29,6 +32,6 @@ export class TitleScene implements IScene {
   }
 
   exit(): void {
-    // nothing to do
+    am.sfx.titleMusic.stop();
   }
 }

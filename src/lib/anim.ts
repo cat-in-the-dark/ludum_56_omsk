@@ -14,6 +14,7 @@ export class Anim implements IUpdateable {
 
   update(dt: number): void {
     if (this.finished) {
+      this.currentFrameIdx = 0;
       return;
     }
 
@@ -23,6 +24,7 @@ export class Anim implements IUpdateable {
       this.currentFrameIdx = (this.currentFrameIdx + 1) % this.frames.length;
       if (this.currentFrameIdx >= this.frames.length - 1 && !this.looping) {
         this.finished = true;
+        
       }
     }
   }

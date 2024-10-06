@@ -29,7 +29,7 @@ export async function main(rl: Raylib) {
   const game1 = new GameScene(am.levels[0], "game2");
   const game2 = new GameScene(am.levels[1], "game3");
   const game3 = new GameScene(am.levels[2], "game4");
-  const game4 = new GameScene(am.levels[3], "title"); // todo gamewin
+  const game4 = new GameScene(am.levels[3], "game1"); // todo gamewin
 
   sceneManager.put("title", title);
   sceneManager.put("game1", game1);
@@ -37,7 +37,7 @@ export async function main(rl: Raylib) {
   sceneManager.put("game3", game3);
   sceneManager.put("game4", game4);
 
-  sceneManager.set("game1");
+  sceneManager.set("title");
 
   let tvMode = false;
 
@@ -57,7 +57,7 @@ export async function main(rl: Raylib) {
     canvas.drawing(() => {
       rl.clearBackground(rl.BLACK);
       sceneManager.draw();
-      rl.drawFPS(140, 19);
+      // rl.drawFPS(140, 19);
     });
 
     const windowRect = tvMode

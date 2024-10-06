@@ -1,10 +1,12 @@
 /* eslint-disable max-lines-per-function */
 import { Vector2 } from "@cat_in_the_dark/math";
 import { ctx } from "@cat_in_the_dark/raylib-wasm";
+import { Howl } from "howler";
 import { Anim } from "../lib/anim";
 import { ITiledLevel } from "../lib/interfaces/tiled-level";
 import { Rect } from "../lib/rect";
 import {
+  baseVolume,
   maxPlayer,
   pigeonDamagedAnimSpeed,
   pigeonIdleAnimSpeed,
@@ -12,6 +14,7 @@ import {
   playerWalkAnimSpeed,
   rockAnimSpeed,
 } from "./consts";
+
 
 export type AssetsManager = Awaited<ReturnType<typeof loadAssets>>;
 export let am: AssetsManager; // global variable for easy access
@@ -94,6 +97,7 @@ export async function loadAssets() {
     await rl.loadTexture("assets/player1/2.png"),
     await rl.loadTexture("assets/player1/3.png"),
     await rl.loadTexture("assets/player1/4.png"),
+    await rl.loadTexture("assets/player1/4.png"),
   ] as const;
 
   const walkAnim1 = new Anim(
@@ -111,6 +115,7 @@ export async function loadAssets() {
     await rl.loadTexture("assets/player2/1.png"),
     await rl.loadTexture("assets/player2/2.png"),
     await rl.loadTexture("assets/player2/3.png"),
+    await rl.loadTexture("assets/player2/4.png"),
     await rl.loadTexture("assets/player2/4.png"),
   ] as const;
 
@@ -147,7 +152,66 @@ export async function loadAssets() {
     );
   }
 
+  const sfx = {
+    titleMusic: new Howl({
+      src: "assets/audio/music/title.mp3",
+      loop: true,
+      volume: baseVolume,
+    }),
+    gameMusic: new Howl({
+      src: "assets/audio/music/pigeon-jazz.mp3",
+      loop: true,
+      volume: baseVolume,
+    }),
+    jingle: new Howl({
+      src: "assets/audio/sfx/round-start.wav",
+      volume: baseVolume,
+    }),
+    throw: new Howl({
+      src: "assets/audio/sfx/throw.wav",
+      volume: baseVolume,
+    }),
+    bonus: new Howl({
+      src: "assets/audio/sfx/bonus.wav",
+      volume: baseVolume,
+    }),
+    bumper: new Howl({
+      src: "assets/audio/sfx/bumper.wav",
+      volume: baseVolume,
+    }),
+    die: new Howl({
+      src: "assets/audio/sfx/die.wav",
+      volume: baseVolume,
+    }),
+    die2: new Howl({
+      src: "assets/audio/sfx/die2.wav",
+      volume: baseVolume,
+    }),
+    arp: new Howl({
+      src: "assets/audio/sfx/generic-arp.wav",
+      volume: baseVolume,
+    }),
+    beep: new Howl({
+      src: "assets/audio/sfx/generic-beep.wav",
+      volume: baseVolume,
+    }),
+    pigeonCollision: new Howl({
+      src: "assets/audio/sfx/pigeon-collision.wav",
+      volume: baseVolume,
+    }),
+    pigeonDead: new Howl({
+      src: "assets/audio/sfx/pigeon-dead.wav",
+      volume: baseVolume,
+    }),
+    spawn: new Howl({
+      src: "assets/audio/sfx/spawn.wav",
+      volume: baseVolume + 0.5,
+    })
+
+  };
+
   return {
+    sfx,
     font,
     logo,
     player,

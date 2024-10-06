@@ -20,58 +20,58 @@
             "scale": 2.7761111111111108,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 180.10806483890337,
-                "y": 144.08645187112268
+                "x": 179.92795677406446,
+                "y": 143.9063438062838
             }
         },
         "level-2.tmx": {
             "expandedObjectLayers": [
-                7,
-                5,
-                6,
                 2,
+                7,
                 8,
+                6,
+                5,
                 4,
                 9
             ],
             "scale": 2,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 228.5,
-                "y": 185
+                "x": 180.25,
+                "y": 144.25
             }
         },
         "level-3.tmx": {
             "expandedObjectLayers": [
-                7,
-                5,
-                6,
                 2,
+                7,
                 8,
+                6,
+                5,
                 4
             ],
             "scale": 3,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 178,
-                "y": 151.66666666666663
+                "x": 180.16666666666669,
+                "y": 144.16666666666666
             }
         },
         "level-4.tmx": {
             "expandedObjectLayers": [
-                7,
-                5,
-                6,
                 2,
+                7,
                 8,
+                6,
+                5,
                 4,
                 9
             ],
             "scale": 2,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 179,
-                "y": 214
+                "x": 197.5,
+                "y": 143.75
             }
         },
         "tileset-2.tsx": {

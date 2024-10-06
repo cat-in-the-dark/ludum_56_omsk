@@ -1,9 +1,10 @@
 import { Vector2 } from "@cat_in_the_dark/math";
 import { IDrawable, IUpdateable } from "../../lib/interfaces/updateable";
-import { PlayerAssets } from "../assets";
+import { am, PlayerAssets } from "../assets";
 import { defaultPlayerSpeed, defaultRockSpeed } from "../consts";
 import { Controls } from "../controls";
 import { type GameScene } from "../scenes/game";
+import { gameState } from "../state";
 import { Rock } from "./rock";
 
 export class Player implements IUpdateable, IDrawable {
@@ -19,7 +20,10 @@ export class Player implements IUpdateable, IDrawable {
     public readonly assets: PlayerAssets,
     public readonly controls: Controls,
     public readonly game: GameScene
-  ) {}
+  ) {
+    am.sfx.spawn.play();
+    gameState.markJoined(id);
+  }
 
   draw(): void {
     const playerPosOffset = new Vector2(
@@ -65,6 +69,7 @@ export class Player implements IUpdateable, IDrawable {
   }
 
   private spawnRock(): void {
+    am.sfx.throw.play();
     this.game.rocks.push(
       new Rock(this.pos.clone(), Vector2.down(), this.rockSpeed)
     );
