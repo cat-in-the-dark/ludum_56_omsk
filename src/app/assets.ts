@@ -229,11 +229,14 @@ export async function loadAssets() {
     }),
   };
 
+  const balloon = new Anim([await rl.loadTexture("assets/balloon/1")],0,false,false);
+
   return {
     sfx,
     font,
     logo,
     player,
+    balloon,
     falling,
     rockAnim,
     pigeonIdleAnim,

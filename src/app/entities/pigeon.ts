@@ -10,6 +10,8 @@ import { Rock } from "./rock";
 
 export type PigeonStates = "idle" | "damaged";
 
+const gravityVec = new Vector2(0,10);
+
 export class Pigeon implements IUpdateable, IDrawable {
   private offset: Vector2;
 
@@ -63,7 +65,7 @@ export class Pigeon implements IUpdateable, IDrawable {
         );
       }
     }
-
+    
     const dir = this.dir.scaledTo(dt * this.speed[this.state]);
     this.pos.x += dir.x;
     this.pos.y += dir.y;
