@@ -1,9 +1,9 @@
 import { Vector2 } from "@cat_in_the_dark/math";
+import { inputs } from "../../lib/inputs";
+import { IScene } from "../../lib/scene-manager";
 import { AssetsManager } from "../assets";
 import { isArrows, isWASD } from "../controls";
 import { Player } from "../entities/player";
-import { inputs } from "../lib/inputs";
-import { IScene } from "../lib/scene-manager";
 
 const position = new Vector2(128, 128);
 

@@ -1,6 +1,7 @@
 import { Vector2 } from "@cat_in_the_dark/math";
+import { inputs } from "../../lib/inputs";
+import { IDrawable, IUpdateable } from "../../lib/interfaces/updateable";
 import { PlayerAssets } from "../assets";
-import { IDrawable, IUpdateable } from "../lib/interfaces/updateable";
 
 export class Player implements IUpdateable, IDrawable {
   constructor(
@@ -14,6 +15,7 @@ export class Player implements IUpdateable, IDrawable {
   }
 
   update(dt: number): void {
-    // nothing
+    if (inputs.isPressed("")) {
+    }
   }
 }

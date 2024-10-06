@@ -1,6 +1,6 @@
 import { Vector2 } from "@cat_in_the_dark/math";
-import { inputs } from "./lib/inputs";
-import type { IUpdateable } from "./lib/interfaces/updateable";
+import { inputs } from "../lib/inputs";
+import type { IUpdateable } from "../lib/interfaces/updateable";
 
 type Mapping = {
   left: string;

@@ -1,4 +1,6 @@
 import { Raylib } from "@cat_in_the_dark/raylib-wasm";
+import { inputs } from "../lib/inputs";
+import { sceneManager } from "../lib/scene-manager";
 import { loadAssets } from "./assets";
 import {
   windowWidth,
@@ -9,8 +11,6 @@ import {
   canvasOrig,
   windowTVRect,
 } from "./consts";
-import { inputs } from "./lib/inputs";
-import { sceneManager } from "./lib/scene-manager";
 import { GameScene } from "./scenes/game";
 import { TitleScene } from "./scenes/title";
 

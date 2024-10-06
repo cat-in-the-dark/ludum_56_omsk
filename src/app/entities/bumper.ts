@@ -1,4 +1,4 @@
-import { IUpdateable } from "../lib/interfaces/updateable";
+import { IUpdateable } from "../../lib/interfaces/updateable";
 
 class Bumper implements IUpdateable {
   update(dt: number): void {

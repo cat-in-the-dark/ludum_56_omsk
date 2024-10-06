@@ -1,9 +1,9 @@
 import { Vector2 } from "@cat_in_the_dark/math";
 import { ctx } from "@cat_in_the_dark/raylib-wasm";
+import { Cooldown } from "../../lib/coroutines/cooldown";
+import { inputs } from "../../lib/inputs";
+import { IScene, sceneManager } from "../../lib/scene-manager";
 import { AssetsManager } from "../assets";
-import { Cooldown } from "../lib/coroutines/cooldown";
-import { inputs } from "../lib/inputs";
-import { IScene, sceneManager } from "../lib/scene-manager";
 
 const zero = Vector2.zero();
 
