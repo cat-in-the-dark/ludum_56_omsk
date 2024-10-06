@@ -12,7 +12,10 @@ export class Pigeon implements IUpdateable, IDrawable {
   constructor(public pos: Vector2, public dir: Vector2) {
     this.animIdle = am.pigeonIdleAnim();
     this.animDamaged = am.pigeonDamagedAnim();
-    this.offset = new Vector2(this.animIdle.frame.width / 2, 0);
+    this.offset = new Vector2(
+      this.animIdle.frame.width / 2,
+      this.animIdle.frame.height
+    );
 
     this.currentAnim = this.animIdle;
   }

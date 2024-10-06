@@ -22,7 +22,7 @@ export class TitleScene implements IScene {
 
   update(dt: number): void {
     if (inputs.isPressed("Space") || this.timer.invoke()) {
-      sceneManager.set("game");
+      sceneManager.set("game1");
     }
 
     this.timer.update(dt);

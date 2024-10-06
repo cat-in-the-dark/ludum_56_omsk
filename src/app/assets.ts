@@ -2,6 +2,7 @@
 import { Vector2 } from "@cat_in_the_dark/math";
 import { ctx } from "@cat_in_the_dark/raylib-wasm";
 import { Anim } from "../lib/anim";
+import { ITiledLevel } from "../lib/interfaces/tiled-level";
 import { Rect } from "../lib/rect";
 import {
   maxPlayer,
@@ -16,6 +17,7 @@ export type AssetsManager = Awaited<ReturnType<typeof loadAssets>>;
 export let am: AssetsManager; // global variable for easy access
 
 export type PlayerAssets = AssetsManager["player"][number];
+export type LevelAsset = AssetsManager["levels"][number];
 
 // первые 8 пикселеь хоть ба
 
@@ -36,6 +38,15 @@ export async function loadAssets() {
 
   // const titleMusic = await rl.loadSound("assets/audio/music/title.mp3");
   // const gameMusic = await rl.loadSound("assets/audio/music/pigeon-jazz.mp3");
+
+  const levels = [
+    {
+      background: await rl.loadTexture("assets/level-backgrounds/level-1.png"),
+      map: (await (
+        await fetch("/data/levels/level-1.json")
+      ).json()) as ITiledLevel,
+    },
+  ] as const;
 
   const idlePigeonFrames = [
     await rl.loadTexture("assets/pigeon/1.png"),
@@ -125,5 +136,6 @@ export async function loadAssets() {
     rockAnim,
     pigeonIdleAnim,
     pigeonDamagedAnim,
+    levels,
   } as const;
 }

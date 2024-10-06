@@ -1,3 +1,5 @@
+import { Vector2 } from "@cat_in_the_dark/math";
+
 export const maxPlayer = 2;
 export const canvasWidth = 360;
 export const canvasHeight = 288;
@@ -8,6 +10,8 @@ export const canvasRect = {
   height: -canvasHeight, // LOOK OUT. THIS MINUS MUST BE HERE
 };
 export const canvasOrig = { x: 0, y: 0 };
+
+export const Vector2Zero = new Vector2(0, 0);
 
 const scale = 2;
 export const windowWidth = canvasWidth * scale;

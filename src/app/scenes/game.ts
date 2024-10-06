@@ -1,8 +1,9 @@
 import { Vector2 } from "@cat_in_the_dark/math";
 import { inputs } from "../../lib/inputs";
-import { IScene } from "../../lib/scene-manager";
-import { am } from "../assets";
-import { canvasHeight, canvasWidth, maxPlayer } from "../consts";
+import { ITiledLevel } from "../../lib/interfaces/tiled-level";
+import { IScene, sceneManager } from "../../lib/scene-manager";
+import { am, LevelAsset } from "../assets";
+import { canvasHeight, canvasWidth, maxPlayer, Vector2Zero } from "../consts";
 import {
   Controls,
   isArrows,
@@ -27,16 +28,29 @@ export class GameScene implements IScene {
     new Vector2(canvasWidth - 64, canvasHeight - 64),
   ];
 
-  constructor() {}
+  constructor(private level: LevelAsset, public readonly nextLevel: string) {
+    level.map.layers.forEach((layer) => {
+      if (layer.name === "static-pigeons") {
+        this.setupStaticPigeons(layer);
+      } else {
+        console.log(layer.name, layer);
+      }
+    });
+  }
+
+  private setupStaticPigeons(layer: ITiledLevel["layers"][number]) {
+    for (const obj of layer.objects ?? []) {
+      const pigeon = new Pigeon(new Vector2(obj.x, obj.y), Vector2.right());
+      this.pigeons.push(pigeon);
+    }
+  }
 
   activate(): void {
     this.players = new Map();
-
-    this.pigeons.push(new Pigeon(new Vector2(180, 32), Vector2.down()));
   }
 
   draw(): void {
-    am.logo.draw(Vector2.zero(), 0, 6);
+    this.level.background.draw(Vector2Zero);
     for (const [, player] of this.players) {
       player.draw();
     }
@@ -57,6 +71,10 @@ export class GameScene implements IScene {
   }
 
   update(dt: number): void {
+    if (inputs.isPressed("Enter")) {
+      sceneManager.set(this.nextLevel);
+    }
+
     for (const [, player] of this.players) {
       player.update(dt);
     }
