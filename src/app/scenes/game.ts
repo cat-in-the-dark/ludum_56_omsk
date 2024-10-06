@@ -29,6 +29,7 @@ import { gameState } from "../state";
 
 const fontPosition = new Vector2(128, 0);
 const statusTextPosition = new Vector2(96, 24);
+const levelNumberPosition = new Vector2(280, 24);
 
 export class GameScene implements IScene {
   players = new Map<string, Player>();
@@ -94,6 +95,7 @@ export class GameScene implements IScene {
     this.jinglePlayed = false;
     this.players = new Map();
     am.sfx.jingle.play();
+    gameState.nextLevel();
   }
 
   draw(): void {
@@ -137,6 +139,12 @@ export class GameScene implements IScene {
           fontSize: 10,
         });
       }
+    });
+
+    am.font.drawTextPro({
+      text: `DOM${gameState.levelNumber}`,
+      fontSize: 10,
+      position: levelNumberPosition,
     });
   }
 
@@ -202,6 +210,15 @@ export class GameScene implements IScene {
           if (circleRect(pigeon, wall)) {
             pigeon.hitWall(wall);
           }
+        }
+      }
+    }
+
+    for (const player of this.players) {
+      for (const falling of this.falling) {
+        if (isCircleCollides(player[1], falling)) {
+          falling.collected = true;
+          gameState.attribute(player[1].id, falling.type);
         }
       }
     }

@@ -3,6 +3,7 @@ import { allowedPlayerNumber } from "./consts";
 export type PlayerAttribution = {
   drink: number;
   egg: number;
+  poop: number;
 };
 
 export class PlayerState {
@@ -11,11 +12,13 @@ export class PlayerState {
   public attribution: PlayerAttribution = {
     drink: 0,
     egg: 0,
+    poop: 0,
   };
 }
 
 export const gameState = {
   playerStates: [] as PlayerState[],
+  levelNumber: 0,
   reset() {
     for (
       let playerNumber = 0;
@@ -24,6 +27,15 @@ export const gameState = {
     ) {
       this.playerStates[playerNumber] = new PlayerState();
     }
+  },
+
+  nextLevel() {
+    this.playerStates.forEach((state) => {
+      state.attribution.egg = 0;
+      state.attribution.drink = 0;
+      state.attribution.poop = 0;
+    });
+    this.levelNumber += 1;
   },
 
   addScore(playerId: number, n: number) {
@@ -44,3 +56,7 @@ export const gameState = {
     }
   },
 };
+
+
+// @ts-expect-error жыж
+window.gameState = gameState;

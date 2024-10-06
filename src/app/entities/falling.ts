@@ -3,13 +3,17 @@ import { Anim } from "../../lib/anim";
 import { IDrawable, IUpdateable } from "../../lib/interfaces/updateable";
 import { am } from "../assets";
 import { canvasHeight } from "../consts";
+import { isCircleCollides } from "../phisics";
 import { PlayerAttribution } from "../state";
 
 export class Falling implements IUpdateable, IDrawable {
   currentAnim: Anim;
+  collected = false;
+
+  radius = 8;
 
   constructor(
-    private type: keyof PlayerAttribution,
+    public type: keyof PlayerAttribution,
     public pos: Vector2,
     public vel: Vector2
   ) {
@@ -40,6 +44,6 @@ export class Falling implements IUpdateable, IDrawable {
   }
 
   shouldDestroy(): boolean {
-    return this.pos.y > canvasHeight - 40;
+    return this.pos.y > canvasHeight - 40 || this.collected;
   }
 }

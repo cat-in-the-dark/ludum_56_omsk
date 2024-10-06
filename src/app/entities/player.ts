@@ -12,6 +12,7 @@ export class Player implements IUpdateable, IDrawable {
   rockSpeed = defaultRockSpeed;
   dir = Vector2.right();
 
+  radius = 16;
   isWalking = false;
 
   constructor(
