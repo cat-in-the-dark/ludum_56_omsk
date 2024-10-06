@@ -46,6 +46,24 @@ export async function loadAssets() {
         await fetch("/data/levels/level-1.json")
       ).json()) as ITiledLevel,
     },
+    {
+      background: await rl.loadTexture("assets/level-backgrounds/level-2.png"),
+      map: (await (
+        await fetch("/data/levels/level-2.json")
+      ).json()) as ITiledLevel,
+    },
+    {
+      background: await rl.loadTexture("assets/level-backgrounds/level-3.png"),
+      map: (await (
+        await fetch("/data/levels/level-3.json")
+      ).json()) as ITiledLevel,
+    },
+    {
+      background: await rl.loadTexture("assets/level-backgrounds/level-4.png"),
+      map: (await (
+        await fetch("/data/levels/level-4.json")
+      ).json()) as ITiledLevel,
+    },
   ] as const;
 
   const idlePigeonFrames = [

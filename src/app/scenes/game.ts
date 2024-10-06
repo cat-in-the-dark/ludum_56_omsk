@@ -63,11 +63,11 @@ export class GameScene implements IScene {
       pigeon.draw();
     }
 
-    am.font.drawTextPro({
-      text: "qazwsxerdcrfv\ntgbyhyhujmik,olp;",
-      position: fontPosition,
-      fontSize: 10,
-    });
+    // am.font.drawTextPro({
+    //   text: "qazwsxerdcrfv\ntgbyhyhujmik,olp;",
+    //   position: fontPosition,
+    //   fontSize: 10,
+    // });
   }
 
   update(dt: number): void {
